@@ -1,6 +1,7 @@
 from .models import Normatizador
 from rest_framework import serializers
 import json
+from classificacao import Classificacao
 
 class NormatizadorSerializer(serializers.ModelSerializer):
 
@@ -9,7 +10,7 @@ class NormatizadorSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
     def create(self, data):
-        print(data['text'])
+        classificador = Classificacao.Analise()
         normatizado = Normatizador()
-        normatizado.text = data['text']
+        normatizado.text = classificador.classificar(data['text'])
         return normatizado
